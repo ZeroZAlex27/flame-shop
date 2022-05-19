@@ -3,6 +3,8 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const sequelize = require("./db");
+const file_upload = require("express-fileupload");
+const path = require("path");
 const models = require("./models/models");
 const router = require("./routes/index");
 const error_handler = require("./middleware/error-handling-middleware");
@@ -13,6 +15,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "static")));
+app.use(file_upload({}));
 app.use("/api", router);
 app.use(error_handler);
 

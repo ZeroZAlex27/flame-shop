@@ -1,7 +1,20 @@
-class BrandController {
-    async create(req, res) {}
+const ApiError = require("../error/api.error");
+const { Brand } = require("../models/models");
 
-    async get_all(req, res) {}
+class BrandController {
+    async create(req, res) {
+        const { name } = req.body;
+
+        const brand = await Brand.create({ name });
+
+        return res.json(brand);
+    }
+
+    async get_all(req, res) {
+        const brands = await Brand.findAll();
+
+        return res.json(brands);
+    }
 }
 
 module.exports = new BrandController();

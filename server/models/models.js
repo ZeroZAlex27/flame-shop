@@ -67,7 +67,7 @@ Rating.belongsTo(Device, { foreignKey: "device_id" });
 Device.hasMany(Basket_To_Device, { foreignKey: "device_id" });
 Basket_To_Device.belongsTo(Device, { foreignKey: "device_id" });
 
-Device.hasMany(DeviceInfo, { foreignKey: "device_id" });
+Device.hasMany(DeviceInfo, { foreignKey: "device_id", as: "info" });
 DeviceInfo.belongsTo(Device, { foreignKey: "device_id" });
 
 Type.belongsToMany(Brand, { through: TypeToBrand, foreignKey: "type_id" });
