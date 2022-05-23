@@ -18,11 +18,25 @@ const NavBar = observer(() => {
                 {user.isAuth ? (
                     <Nav className="ml-auto">
                         <Nav.Link onClick={() => navigate(ADMIN_ROUTE)}>Админ панель</Nav.Link>
-                        <Nav.Link onClick={() => navigate(LOGIN_ROUTE)}>Выйти</Nav.Link>
+                        <Nav.Link
+                            onClick={() => {
+                                navigate(LOGIN_ROUTE);
+                                user.setIsAuth(false);
+                            }}
+                        >
+                            Выйти
+                        </Nav.Link>
                     </Nav>
                 ) : (
                     <Nav className="ml-auto">
-                        <Nav.Link onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</Nav.Link>
+                        <Nav.Link
+                            onClick={() => {
+                                navigate(LOGIN_ROUTE);
+                                user.setIsAuth(true);
+                            }}
+                        >
+                            Авторизация
+                        </Nav.Link>
                     </Nav>
                 )}
             </Container>
