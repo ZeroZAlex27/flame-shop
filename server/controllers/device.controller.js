@@ -14,6 +14,14 @@ class DeviceController {
         try {
             img.mv(path.resolve(__dirname, "..", "static", file_name));
 
+            const device = await Device.create({
+                name,
+                price,
+                brand_id,
+                type_id,
+                img: file_name,
+            });
+
             if (info) {
                 info = JSON.parse(info);
                 info.forEach((i) => {
@@ -24,14 +32,6 @@ class DeviceController {
                     });
                 });
             }
-
-            const device = await Device.create({
-                name,
-                price,
-                brand_id,
-                type_id,
-                img: file_name,
-            });
 
             return res.json(device);
         } catch (error) {
