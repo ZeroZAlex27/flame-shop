@@ -48,23 +48,32 @@ class DeviceController {
         let offset = page * limit - limit;
         let devices;
 
-        if (!brand_id && !type_id) {
-            devices = await Device.findAndCountAll({ limit, offset });
-        }
+        try {
+            if (!brand_id && !type_id) {
+                devices = await Device.findAndCountAll({ limit, offset });
+            }
 
-        if (brand_id && !type_id) {
-            devices = await Device.findAndCountAll({ where: { brand_id }, limit, offset });
-        }
+            if (brand_id && !type_id) {
+                devices = await Device.findAndCountAll({ where: { brand_id }, limit, offset });
+            }
 
-        if (!brand_id && type_id) {
-            devices = await Device.findAndCountAll({ where: { type_id }, limit, offset });
-        }
+            if (!brand_id && type_id) {
+                devices = await Device.findAndCountAll({ where: { type_id }, limit, offset });
+            }
 
-        if (brand_id && type_id) {
-            devices = await Device.findAndCountAll({ where: { brand_id, type_id }, limit, offset });
-        }
+            if (brand_id && type_id) {
+                devices = await Device.findAndCountAll({
+                    where: { brand_id, type_id },
+                    limit,
+                    offset,
+                });
+            }
 
-        return res.json(devices);
+            return res.json(devices);
+        } catch (error) {
+            console.log(error);
+            next(ApiError.bad_request(error.message));
+        }
     }
 
     async get_one(req, res) {
