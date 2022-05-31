@@ -2,18 +2,26 @@ const ApiError = require("../error/api.error");
 const { Type } = require("../models/models");
 
 class TypeController {
-    async create(req, res) {
+    async create(req, res, next) {
         const { name } = req.body;
 
-        const type = await Type.create({ name });
+        try {
+            const type = await Type.create({ name });
 
-        return res.json(type);
+            return res.json(type);
+        } catch (error) {
+            next(ApiError.bad_request(error.message));
+        }
     }
 
-    async get_all(req, res) {
-        const types = await Type.findAll();
+    async get_all(_req, res, next) {
+        try {
+            const types = await Type.findAll();
 
-        return res.json(types);
+            return res.json(types);
+        } catch (error) {
+            next(ApiError.internal(error.message));
+        }
     }
 }
 

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useState, useEffect } from "react";
 import { Modal, Button, Form, Dropdown, Row, Col } from "react-bootstrap";
 import { Context } from "../..";
-import { createDevice, fetchBrands, fetchTypes } from "../../http/deviceAPI";
+import { createDevice, createPicture, fetchBrands, fetchTypes } from "../../http/deviceAPI";
 
 const CreateDevice = observer(({ show, onHide }) => {
     const { device } = useContext(Context);
@@ -33,14 +33,17 @@ const CreateDevice = observer(({ show, onHide }) => {
     };
 
     const addDevice = () => {
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("price", `${price}`);
-        formData.append("img", file);
-        formData.append("brand_id", device.selectedBrand.id);
-        formData.append("type_id", device.selectedType.id);
-        formData.append("info", JSON.stringify(info));
-        createDevice(formData).then((data) => onHide());
+        createDevice(
+            name,
+            `${price}`,
+            device.selectedBrand.id,
+            device.selectedType.id,
+            JSON.stringify(info)
+        )
+            .then((data) => {
+                if (file !== null) createPicture(data.id, file);
+            })
+            .then(() => onHide());
     };
 
     return (

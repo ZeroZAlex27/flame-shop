@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
+import device_icon from "../assets/default_device_icon.png";
 import star from "../assets/star.png";
 import { useParams } from "react-router-dom";
 import { fetchOneDevice } from "../http/deviceAPI";
@@ -19,7 +20,7 @@ const DevicePage = () => {
                     <Image
                         width={300}
                         height={300}
-                        src={process.env.REACT_APP_API_URL + device.img}
+                        src={device.picture?.picture_url ?? device_icon}
                     />
                 </Col>
                 <Col md={4}>
