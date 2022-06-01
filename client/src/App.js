@@ -5,10 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import { Context } from ".";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
+import { fetchBasket } from "./http/basketAPI";
 import { check } from "./http/userAPI";
 
 const App = observer(() => {
-    const { user } = useContext(Context);
+    const { user, device } = useContext(Context);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -16,6 +17,13 @@ const App = observer(() => {
             .then((data) => {
                 user.setUser(data);
                 user.setIsAuth(true);
+            })
+            .then(() => {
+                if (user.isAuth) {
+                    fetchBasket().then((data) => {
+                        device.setBasket(data.id);
+                    });
+                }
             })
             .finally(() => setLoading(false));
     }, []);

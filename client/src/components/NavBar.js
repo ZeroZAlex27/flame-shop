@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "..";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
+import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import { observer } from "mobx-react-lite";
 import { fetchBrands, fetchDevices, fetchTypes } from "../http/deviceAPI";
 
@@ -41,6 +41,7 @@ const NavBar = observer(() => {
                 {user.isAuth ? (
                     <Nav className="ml-auto">
                         <Nav.Link onClick={() => navigate(ADMIN_ROUTE)}>Админ панель</Nav.Link>
+                        <Nav.Link onClick={() => navigate(BASKET_ROUTE)}>Корзина</Nav.Link>
                         <Nav.Link
                             onClick={() => {
                                 logOut();

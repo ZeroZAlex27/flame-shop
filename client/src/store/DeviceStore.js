@@ -10,6 +10,8 @@ export default class DeviceStore {
         this._page = 1;
         this._totalCount = 0;
         this._limit = 3;
+        this._basket = null;
+        this._isAddedToBasket = false;
         makeAutoObservable(this);
     }
 
@@ -43,6 +45,14 @@ export default class DeviceStore {
         this._totalCount = totalCount;
     }
 
+    setBasket(basket) {
+        this._basket = basket;
+    }
+
+    setIsAddedToBasket(bool) {
+        this._isAddedToBasket = bool;
+    }
+
     get types() {
         return this._types;
     }
@@ -73,5 +83,13 @@ export default class DeviceStore {
 
     get limit() {
         return this._limit;
+    }
+
+    get basket() {
+        return this._basket;
+    }
+
+    get isAddedToBasket() {
+        return this._isAddedToBasket;
     }
 }
